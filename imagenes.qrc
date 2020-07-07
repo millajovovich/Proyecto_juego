@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/imag">
+        <file>personaje0.png</file>
+        <file>fondo.jpg</file>
+    </qresource>
+</RCC>
