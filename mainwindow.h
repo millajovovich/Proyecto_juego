@@ -7,6 +7,7 @@
 #include <QKeyEvent>
 #include "personaje.h"
 #include "ataques.h"
+#include "enemigo.h"
 #include <QTimer>
 #include <QList>
 
@@ -28,12 +29,15 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QGraphicsScene *Scene;
+    QGraphicsScene *Scene = new QGraphicsScene;
     QGraphicsView *view;
     QTimer *timer;
     personaje *cuerpo;
     ataques *bala;
+
     QList<ataques*> balas;
+    QList<enemigo*> enemy;
+
     void keyPressEvent(QKeyEvent *evento);
 };
 #endif // MAINWINDOW_H

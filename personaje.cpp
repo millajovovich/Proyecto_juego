@@ -18,7 +18,7 @@ void personaje::setVx(double value)
 personaje::personaje()
 {
     posx=400;
-    posy=100;
+    posy=-100;
     vel=0;
     setPos(posx,-posy);
 }
@@ -28,7 +28,7 @@ QRectF personaje::boundingRect() const
     return QRectF(-20,-35,35,70);
 }
 
-void personaje::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void personaje::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
     QPixmap pixmap;
     pixmap.load(":/imag/personaje0.png");
@@ -44,7 +44,7 @@ int personaje::getPosx() const
 
 void personaje::setPosx(int value)
 {
-    posx += value;
+    posx = value;
 }
 
 int personaje::getPosy() const
@@ -54,7 +54,8 @@ int personaje::getPosy() const
 
 void personaje::setPosy(int value)
 {
-    posy = value;
+    posy += value;
+    setPos(posx,-posy);
 }
 
 void personaje::calculo(/*double posx2, double posy2, double masa2*/)
@@ -77,8 +78,10 @@ void personaje::salto()
 
 bool personaje::baja_altura()
 {
-    if ( posy <= 1 )
+    if ( posy < -420 )
         return true;
+    else if (posx < 2  ||  posx > 750 )
+        vx = -vx;
     else
         return false;
 }

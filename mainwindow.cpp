@@ -6,11 +6,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    Scene= new QGraphicsScene;
     timer= new QTimer;
 
     ui->graphicsView->setScene(Scene);
-    Scene->setSceneRect(0,0,670,300);
+    Scene->setSceneRect(0,0,800,450);
     Scene->addRect(Scene->sceneRect());
 
     cuerpo = new personaje();
@@ -36,12 +35,28 @@ void MainWindow::Mover()
     cuerpo->iteracion();
     cuerpo->calculo();
 
+    //movimiento de las balas
     for( int i=0; i<balas.size();i++ ){
-        balas.at(i)->movimiento();
+        if ( balas.at(i)->getPosx_bala() > 700 ){
+            Scene->removeItem(balas.at(i));                 // para remover de la escena
+            balas.removeOne(balas.at(i)) ;                  //para eliminar de la lista
+        }
+        else
+            balas.at(i)->movimiento();
     }
 
+    for( int i=0; i<enemy.size();i++ ){
+        if ( enemy.at(i)->getPosx_enemigo() < 50 ){
+            Scene->removeItem(enemy.at(i));                 // para remover de la escena
+            enemy.removeOne(enemy.at(i));                  //para eliminar de la lista
+        }
+        else
+            enemy.at(i)->movimiento();
+    }
+
+
     if ( cuerpo->baja_altura() == true )
-        cuerpo->setPosy(1);
+        cuerpo->salto();
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *evento)
@@ -58,6 +73,9 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     if( evento->key()==Qt::Key_S ){
         balas.append(new ataques(cuerpo->getPosx(), -cuerpo->getPosy()));
         Scene->addItem(balas.back());
+
+        enemy.append( new enemigo() );
+        Scene->addItem(enemy.back());
     }
 
 }

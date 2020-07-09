@@ -1,8 +1,15 @@
 #include "ataques.h"
+//#include "mainwindow.h"
+
+ataques::~ataques()
+{   }
 
 ataques::ataques()
-{
+{   }
 
+double ataques::getPosx_bala() const
+{
+    return posx_bala;
 }
 
 ataques::ataques(double x, double y)
@@ -19,16 +26,12 @@ QRectF ataques::boundingRect() const
 
 void ataques::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setBrush(Qt::blue);
+    painter->setBrush(Qt::red);
     painter->drawEllipse(boundingRect());
 }
 
 void ataques::movimiento()
 {
-    posx_bala+=10*0.2;                  // movimiento de la bala
+    posx_bala+=20*0.2;                  // movimiento de la bala
     setPos(posx_bala, posy_bala);
-
-    /*if (posx_bala > 600){
-        scene()->removeItem(this);
-    }*/
 }
