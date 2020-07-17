@@ -1,11 +1,11 @@
-#ifndef ATAQUES_H
-#define ATAQUES_H
+#ifndef ATAQUES_ENEMIGOS_H
+#define ATAQUES_ENEMIGOS_H
 
 #include <QGraphicsItem>
 #include <QPainter>
 
 
-class ataques: public QGraphicsItem
+class ataques_enemigos: public QGraphicsItem
 {
     bool    colision = false;
     double  posx_bala;
@@ -15,9 +15,9 @@ class ataques: public QGraphicsItem
     int     puntos  = 0;                 //      para saber si colisiono con un enemigo
 
 public:
-    ataques( );
-    ~ataques();
-    ataques(double x, double y, int tip);                  //para crear la bala desde la posicion de personaje
+    ataques_enemigos();
+
+    ataques_enemigos(double x, double y, int tip);                  //para crear la bala desde la posicion de personaje
 
     QRectF boundingRect() const ;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR);
@@ -30,4 +30,4 @@ public:
     int getPuntos() const;              //para obtener si desaparace por impacto de disparo
 };
 
-#endif // ATAQUES_H
+#endif // ATAQUES_ENEMIGOS_H

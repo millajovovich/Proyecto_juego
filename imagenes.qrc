@@ -1,6 +1,12 @@
 <RCC>
     <qresource prefix="/imag">
+        <file>fondo.png</file>
         <file>personaje0.png</file>
-        <file>fondo.jpg</file>
+        <file>nube.png</file>
+        <file>nube.gif</file>
+        <file>personaje1.png</file>
+        <file>personaje2.png</file>
+        <file>gato.png</file>
+        <file>intro.jpg</file>
     </qresource>
 </RCC>
