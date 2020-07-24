@@ -30,7 +30,11 @@ jefes::jefes(int pos_x, int pos_y)
 
 void jefes::movimiento()
 {
-    posx += 0.01;
+    if ( posx > 720 ){
+        posx -= 1;
+    }
+    setPos( posx, posy );
+
     QList<QGraphicsItem *> colliding_items = collidingItems();  // para la colision con disparo o con jugador
     for (int i = 0, n = colliding_items.size(); i < n; ++i)
     {

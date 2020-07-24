@@ -11,16 +11,14 @@ bool enemigo::getColision() const
 enemigo::enemigo()
 {
     //srand (time(NULL));
-    posx_enemigo = 800;
+    posx_enemigo = 820;
     posy_enemigo = rand()%410+80;
     setPos( posx_enemigo , posy_enemigo );
-    tipo_enemigo = rand()%2;
+    tipo_enemigo = rand()%1;
 }
 
 enemigo::~enemigo()
-{
-
-}
+{   }
 
 double enemigo::getPosx_enemigo() const
 {
@@ -39,15 +37,15 @@ void enemigo::setVx(double value)
 
 void enemigo::movimiento()
 {
-    if ( tipo_enemigo == 0 )
-        posx_enemigo += vx*0.1;   //       posx = vel*tiempo
+    //if ( tipo_enemigo == 0 )
+    //    posx_enemigo += vx*0.1;   //       posx = vel*tiempo
 
-    else if ( tipo_enemigo == 1 ){
+    if ( tipo_enemigo == 0 ){
         posx_enemigo += -10*0.1;
-        posy_enemigo += vy*0.1;
+        posy_enemigo += vy * 0.1;
 
         if ( posy_enemigo <= 70 || posy_enemigo >= 510 )        // para hacer el efecto de rebote
-            vy=-vy;
+            vy = -vy;
 
     }
     setPos( posx_enemigo , posy_enemigo );
@@ -75,6 +73,7 @@ QRectF enemigo::boundingRect() const
 
 void enemigo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setBrush(Qt::blue);
-    painter->drawRect(boundingRect());
+    QPixmap pixmap;
+    pixmap.load(":/imag/alien.png");
+    painter->drawPixmap(boundingRect(),pixmap,pixmap.rect());
 }

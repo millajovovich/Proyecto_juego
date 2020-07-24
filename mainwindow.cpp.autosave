@@ -147,7 +147,7 @@ void MainWindow::Mover( )
 
             //      CUENTA PARA APARICION DE LOS JEFES
             cuenta_enemigos += 1;                             // para llevar la cuenta de en cuanto aparece el boss
-            if (cuenta_enemigos%2*nivel == 0 && verificador == 0){  // condicional para llamar al boss, verif = 0 para no spawnear otro boss
+            if (cuenta_enemigos%10*nivel == 0 && verificador == 0){  // condicional para llamar al boss, verif = 0 para no spawnear otro boss
                 add_boss();
             }
         }

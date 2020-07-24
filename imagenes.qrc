@@ -8,5 +8,7 @@
         <file>personaje2.png</file>
         <file>gato.png</file>
         <file>intro.jpg</file>
+        <file>alien.png</file>
+        <file>ata_boss1.png</file>
     </qresource>
 </RCC>

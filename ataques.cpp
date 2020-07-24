@@ -37,12 +37,12 @@ void ataques::movimiento()
     }
 
     if ( tipo == 0 ){
-        posx_bala += 20*0.2;                  // movimiento de la bala
+        posx_bala += 20 * tiempo;                  // movimiento de la bala
         setPos(posx_bala, posy_bala);
     }
 
     else if ( tipo == 1 ){
-        posx_bala -= 20*0.2;                  // movimiento de la bala
+        posx_bala -= 20 * tiempo;                  // movimiento de la bala
         setPos(posx_bala, posy_bala);
     }
 

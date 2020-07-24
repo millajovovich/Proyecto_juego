@@ -7,12 +7,15 @@
 
 class nubes : public QGraphicsItem
 {
-    int     tipo;            // para darte un poder a cada tipo de nube
+    int     tipo = rand()%1;            // para darte un poder a cada tipo de nube
+    int     radio;
+
     double  posx;
     double  posy;
-    int     radio;
-    bool    colision = false;
-    bool     imagen = 0;
+
+    bool    colision_perso  = false;
+    bool    colision        = false;
+    bool    imagen          = 0;
 public:
     nubes();
 
@@ -20,6 +23,7 @@ public:
 
     int getTipo() const;
     bool getColision() const;
+    bool getColision_perso() const;
 
     QRectF boundingRect() const ;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR);

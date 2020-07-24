@@ -16,6 +16,7 @@
 #include "jefes.h"
 
 #include "nubes.h"
+#include "agujero_negro.h"
 
 #include <QTimer>
 #include <QList>
@@ -33,9 +34,12 @@ public:
     ~MainWindow();
     bool activacion         = true;         //  para confirmar, por ahora no esta en uso
     bool multijugador       = 0;
+    bool ataque_jefe        = 0;
+    bool completado         = 0;
 
     int marcador            = 0;
     int verificador         = 0;            //  este es para saber si entra en escena un boss y no spawnear enemigos basicos
+    int verificador_hole    = 0;
     int cuenta_enemigos     = 1;            //  empieza en uno para que no aparezca jefe empezando
     int pantalla            = 0;
     int nivel               = 1;            //  representa el nivel actual y para la dificultad
@@ -45,10 +49,12 @@ private slots:
     void add_enemigo();                 //      para añadir enemigo
     void add_boss();                    //      para añadir jefe
     void add_nube();
+    void add_agujero();
     void ataque_boss();
 
     void Mover();                       //      para actualizar las posiciones
     void juego_terminado();             //      para anunciar game over
+    void juego_completado();
 
     //       BOTONES
     void on_Empezar_clicked();
@@ -66,18 +72,21 @@ private:
     QTimer *tiempo_enemigos = new QTimer;
     QTimer *tiempo_ata_jefe = new QTimer;               // timepo entre los  ataques de jefes
     QTimer *tiempo_nubes    = new QTimer;               // tiempo de aparicion de las nubes
+    QTimer *tiempo_agujero  = new QTimer;               // tiempo de aparicion de las nubes
 
-    personaje   *cuerpo;
-    personaje2  *cuerpo2;
-    ataques     *bala;
-    jefes       *boss;
-    nubes       *power_up;
+    personaje       *cuerpo;
+    personaje2      *cuerpo2;
+    ataques         *bala;
+    jefes           *boss;
+    nubes           *power_up;
+    agujero_negro   *hole;
 
     //              LISTAS PARA LOS MOVIMIENTOS Y CONFIMARCIONES DE COLISION
     QList<ataques*>             balas;
     QList<ataques_enemigos*>    balas_ene;
     QList<enemigo*>             enemy;
     QList<nubes*>               nube;
+    QList<agujero_negro*>       negro;
 
 
     void keyPressEvent(QKeyEvent *evento);

@@ -10,6 +10,11 @@ nubes::nubes()
     setPos( posx, posy );
 }
 
+bool nubes::getColision_perso() const
+{
+    return colision_perso;
+}
+
 bool nubes::getColision() const
 {
     return colision;
@@ -22,17 +27,20 @@ int nubes::getTipo() const
 
 void nubes::movimiento()
 {
-    posx -= 5*0.2;
+    posx -= 10*0.2;
 
     QList<QGraphicsItem *> colliding_items = collidingItems();  // para la colision con disparo
     for (int i = 0, n = colliding_items.size(); i < n; ++i)
     {
-        if (typeid(*(colliding_items[i])) == typeid(personaje) )
+        if (typeid(*(colliding_items[i])) == typeid(personaje) ){
             colision = true;
+            colision_perso = true;
+        }
     }
 
-    if ( posx <= 10 )
+    if ( posx <= 10 ){
         colision = true;
+    }
 
     setPos( posx, posy );
 }

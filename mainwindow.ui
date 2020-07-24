@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>841</width>
-    <height>586</height>
+    <height>565</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -76,6 +76,9 @@ background-color: qlineargradient(spread:pad, x1:0.853, y1:0.869, x2:0, y2:0.028
       <height>31</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>CrossCursor</cursorShape>
+    </property>
     <property name="layoutDirection">
      <enum>Qt::LeftToRight</enum>
     </property>
@@ -85,8 +88,20 @@ background-color: qlineargradient(spread:pad, x1:0.853, y1:0.869, x2:0, y2:0.028
     <property name="minimum">
      <number>0</number>
     </property>
+    <property name="maximum">
+     <number>100</number>
+    </property>
     <property name="value">
-     <number>24</number>
+     <number>100</number>
+    </property>
+    <property name="textVisible">
+     <bool>false</bool>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+    <property name="invertedAppearance">
+     <bool>false</bool>
     </property>
     <property name="textDirection">
      <enum>QProgressBar::TopToBottom</enum>
@@ -116,6 +131,12 @@ background-color: qlineargradient(spread:pad, x1:0.853, y1:0.869, x2:0, y2:0.028
     </property>
     <property name="styleSheet">
      <string notr="true"/>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
    </widget>
    <widget class="QLCDNumber" name="lcdNumber">
@@ -148,10 +169,10 @@ border-color: rgb(255, 0, 0);</string>
    <widget class="QLabel" name="gameover">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>190</y>
-      <width>311</width>
-      <height>91</height>
+      <x>160</x>
+      <y>300</y>
+      <width>501</width>
+      <height>151</height>
      </rect>
     </property>
     <property name="font">
@@ -160,7 +181,7 @@ border-color: rgb(255, 0, 0);</string>
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:48pt; color:#ff0000;&quot;&gt;game over&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:72pt; color:#2eff00;&quot;&gt;game over&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QPushButton" name="salir_menu">
@@ -203,7 +224,8 @@ border-color: rgb(255, 0, 0);</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.853, y1:0.869, x2:0, y2:0.0282273, stop:0 rgba(255, 54, 0, 255), stop:1 rgba(255, 255, 255, 255));</string>
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.853, y1:0.869, x2:0, y2:0.0282273, stop:0 rgba(255, 54, 0, 255), stop:1 rgba(255, 255, 255, 255));
+color: rgb(255, 0, 0);</string>
     </property>
     <property name="text">
      <string>2 JUGADORES</string>
@@ -228,7 +250,10 @@ border-color: rgb(255, 0, 0);</string>
      <number>0</number>
     </property>
     <property name="value">
-     <number>24</number>
+     <number>100</number>
+    </property>
+    <property name="textVisible">
+     <bool>false</bool>
     </property>
     <property name="textDirection">
      <enum>QProgressBar::TopToBottom</enum>
@@ -247,6 +272,60 @@ border-color: rgb(255, 0, 0);</string>
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#000000;&quot;&gt;SEBASTIAN&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
+   <widget class="QLabel" name="completado">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>70</y>
+      <width>751</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Jokerman</family>
+     </font>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:48pt; color:#00ff00;&quot;&gt;¡HAS COMPLETADO EL JUEGO!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::AutoText</enum>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="score">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>290</y>
+      <width>301</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>29</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
    <zorder>graphicsView</zorder>
    <zorder>gameover</zorder>
    <zorder>Empezar</zorder>
@@ -258,22 +337,8 @@ border-color: rgb(255, 0, 0);</string>
    <zorder>multijugador</zorder>
    <zorder>progressBar_2</zorder>
    <zorder>nombre_2</zorder>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>841</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuAirKick">
-    <property name="title">
-     <string>AirKick</string>
-    </property>
-   </widget>
-   <addaction name="menuAirKick"/>
+   <zorder>completado</zorder>
+   <zorder>score</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
