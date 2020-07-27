@@ -42,7 +42,6 @@ public:
 
     //          ACCIONES
     void salto();
-    bool baja_altura();                 // para confirmar la altura apropiada
 
     int getSalud() const;
     int getPerdida() const;

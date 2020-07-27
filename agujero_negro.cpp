@@ -12,7 +12,7 @@ agujero_negro::agujero_negro(): escala(0.04)
 {
     posx = 830;
     posy = rand()%440+60;
-    vx = -5;
+    vx = -8;
     vy = 0;
     masa = 20000;
     radio = 10;
@@ -41,14 +41,14 @@ void agujero_negro::iteracion()     //      PARA ACTUALIZAR LAS POSICIONES Y REI
     Ax=0;
     Ay=0;
 
-    if ( posx <= 20 ){
+    if ( posx <= 0 ){
         destrucion = true;
     }
 }
 
 QRectF agujero_negro::boundingRect() const
 {
-    return QRectF(-5,-5,10,10);
+    return QRectF(-10,-10,20,20);
 }
 
 void agujero_negro::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

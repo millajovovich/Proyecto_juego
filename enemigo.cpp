@@ -12,7 +12,7 @@ enemigo::enemigo()
 {
     //srand (time(NULL));
     posx_enemigo = 820;
-    posy_enemigo = rand()%410+80;
+    posy_enemigo = rand()%390+100;
     setPos( posx_enemigo , posy_enemigo );
     tipo_enemigo = rand()%1;
 }
@@ -37,14 +37,11 @@ void enemigo::setVx(double value)
 
 void enemigo::movimiento()
 {
-    //if ( tipo_enemigo == 0 )
-    //    posx_enemigo += vx*0.1;   //       posx = vel*tiempo
-
     if ( tipo_enemigo == 0 ){
         posx_enemigo += -10*0.1;
         posy_enemigo += vy * 0.1;
 
-        if ( posy_enemigo <= 70 || posy_enemigo >= 510 )        // para hacer el efecto de rebote
+        if ( posy_enemigo <= 80 || posy_enemigo >= 500 )        // para hacer el efecto de rebote
             vy = -vy;
 
     }
@@ -61,7 +58,7 @@ void enemigo::movimiento()
             colision = true;
         }
         else if ( typeid(*(colliding_items[i])) == typeid(ataques) ){
-            salud -= 50;
+            salud -= 20;
         }
     }
 }

@@ -1,6 +1,17 @@
 #include "ataques.h"
 #include "mainwindow.h"
 
+ataques::ataques( )
+{   }
+
+ataques::ataques(double x, double y, int tip)
+{
+    tipo = tip;
+    posx_bala = x;
+    posy_bala = y;
+    setPos(posx_bala, posy_bala);
+}
+
 ataques::~ataques()
 {   }
 
@@ -14,20 +25,9 @@ int ataques::getPuntos() const
     return puntos;
 }
 
-ataques::ataques( )
-{   }
-
 double ataques::getPosx_bala() const
 {
     return posx_bala;
-}
-
-ataques::ataques(double x, double y, int tip)
-{
-    tipo = tip;
-    posx_bala = x;
-    posy_bala = y;
-    setPos(posx_bala, posy_bala);
 }
 
 void ataques::movimiento()
@@ -58,12 +58,13 @@ void ataques::movimiento()
 
 QRectF ataques::boundingRect() const
 {
-    return QRectF(-5,-5,20,5);
+    return QRectF(-5,-5,20,10);
 }
 
 void ataques::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setBrush(Qt::red);
-    painter->drawEllipse(boundingRect());
+    QPixmap pixmap;
+    pixmap.load(":/imag/balas.png");
+    painter->drawPixmap(boundingRect(),pixmap,pixmap.rect());
 }
 

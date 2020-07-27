@@ -101,9 +101,6 @@ void personaje::iteracion()
 
     }
 
-    if ( posy > -100 )
-        vy = 0;
-
     vx = vx + Ax*delta;
     vy = vy +( Ay - g )*delta;
     vel = sqrt(vy*vy+vx*vx);
@@ -113,10 +110,23 @@ void personaje::iteracion()
     posy += vy*delta + 0.5*( Ay - g ) * delta * delta;
     Ax = 0;
     Ay = 0;
-    setPos( posx,-posy );
 
-    if ( salud <= 0 )                   //          REPRESENTA EL GAME OVER EN MAINMENU
+    if ( salud <= 0 )                   //      REPRESENTA EL GAME OVER EN MAINMENU
         perdida = 1;
+
+    if ( posy > -100 ){
+        vy = 0;
+        posy = -100;
+    }
+    else if (posx < 10  ||  posx > 810 ){
+        vx = -vx;
+    }
+    else if ( posy < -500 ){
+        vy = 70;
+        posy = -500;
+        salud -= 20;
+    }
+    setPos( posx,-posy );
 }
 
 void personaje::salto()
@@ -125,15 +135,6 @@ void personaje::salto()
     imagen = !imagen;
 }
 
-bool personaje::baja_altura()
-{
-    if ( posy < -500 )
-        return true;
-    else if (posx < 10  ||  posx > 810 )
-        vx = -vx;
-    else
-        return false;
-}
 
 QRectF personaje::boundingRect() const
 {

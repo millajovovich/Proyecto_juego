@@ -10,5 +10,12 @@
         <file>intro.jpg</file>
         <file>alien.png</file>
         <file>ata_boss1.png</file>
+        <file>balas.png</file>
+        <file>ata_boss2.png</file>
+        <file>ambi1.png</file>
+        <file>ambi2.png</file>
+        <file>boss2.png</file>
+        <file>fondo1.png</file>
+        <file>boton.png</file>
     </qresource>
 </RCC>

@@ -17,9 +17,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     agujero_negro.cpp \
+    ambiente.cpp \
     ataques.cpp \
     ataques_enemigos.cpp \
     enemigo.cpp \
+    guardado.cpp \
     jefes.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -29,9 +31,11 @@ SOURCES += \
 
 HEADERS += \
     agujero_negro.h \
+    ambiente.h \
     ataques.h \
     ataques_enemigos.h \
     enemigo.h \
+    guardado.h \
     jefes.h \
     mainwindow.h \
     nubes.h \

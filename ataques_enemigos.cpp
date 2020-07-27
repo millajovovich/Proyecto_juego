@@ -46,11 +46,11 @@ void ataques_enemigos::movimiento()
     }
 
     if ( tipo == 0 ){
-        posx_bala -= 20*t;                  // movimiento de la bala
+        posx_bala -= 25*t;                  // movimiento de la bala
     }
 
     else if ( tipo == 1 ){
-        posx_bala -= 20*t;                  // movimiento del ataque
+        posx_bala -= 25*t;                  // movimiento del ataque
     }
 
     else if ( tipo == 2 ){
@@ -73,13 +73,13 @@ void ataques_enemigos::movimiento()
 QRectF ataques_enemigos::boundingRect() const
 {
     if (tipo == 0){
-        return QRectF(-5,-5,20,5);
+        return QRectF(-5,-5,10,10);
     }
     else if ( tipo == 1 ){
         return QRectF(0,-50,825,100);
     }
     else if ( tipo == 2 ){
-        return QRectF(-15, -15, 30, 30);
+        return QRectF(-15, -15, 60, 30);
     }
 }
 
@@ -101,7 +101,8 @@ void ataques_enemigos::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     }
 
     else if ( tipo == 2 ){
-        painter->setBrush(Qt::red);
-        painter->drawEllipse(boundingRect());
+        QPixmap pixmap;
+        pixmap.load(":/imag/ata_boss2.png");
+        painter->drawPixmap(boundingRect(),pixmap,pixmap.rect());
     }
 }

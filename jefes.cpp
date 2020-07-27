@@ -21,18 +21,25 @@ jefes::jefes()
 
 }
 
-jefes::jefes(int pos_x, int pos_y)
+jefes::jefes(int pos_x, int pos_y, int lvl_ )
 {
-    posx = pos_x;
-    posy = pos_y;
+    posx  = pos_x;
+    posy  = pos_y;
+    nivel = lvl_;
+    salud = salud*lvl_;             // para colocar salud dependiendo nivel
+
     setPos(posx, posy);
 }
 
 void jefes::movimiento()
 {
-    if ( posx > 720 ){
+    if ( posx > 700 && nivel == 1 ){
         posx -= 1;
     }
+    else if ( posx > 680 ){
+        posx -= 1;
+    }
+
     setPos( posx, posy );
 
     QList<QGraphicsItem *> colliding_items = collidingItems();  // para la colision con disparo o con jugador
@@ -43,6 +50,7 @@ void jefes::movimiento()
         }
     }
     if ( salud <= 0 ){
+        salud = 0;
         destruccion = true;
     }
 }
@@ -50,12 +58,22 @@ void jefes::movimiento()
 
 QRectF jefes::boundingRect() const
 {
-    return QRectF(0,0,100,400);
+    if ( nivel == 1 ){
+        return QRectF(0,0,140,420);
+    }
+    else if ( nivel == 2 )
+        return QRectF(0,0,150,420);
 }
 
 void jefes::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QPixmap pixmap;
-    pixmap.load(":/imag/gato.png");
-    painter->drawPixmap(boundingRect(),pixmap,pixmap.rect());
+    if ( nivel == 1 ){
+        pixmap.load(":/imag/gato.png");
+        painter->drawPixmap(boundingRect(),pixmap,pixmap.rect());
+    }
+    else if ( nivel == 2 || nivel == 3){
+        pixmap.load(":/imag/boss2.png");
+        painter->drawPixmap(boundingRect(),pixmap,pixmap.rect());
+    }
 }

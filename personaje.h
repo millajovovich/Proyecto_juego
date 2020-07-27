@@ -7,7 +7,7 @@
 
 class personaje: public QGraphicsItem
 {
-    double angulo=0, posy, posx, vx=0, vy=0, vel=0, Ax=0, Ay=0, masa=70, radio , dist;
+    double  angulo=0, posy, posx, vx=0, vy=0, vel=0, Ax=0, Ay=0, masa=70, radio , dist;
     double  G           = 1;                // constante de cavendish
     double  g           = 9.8;                // gravedad
     double  delta       = 0.2;
@@ -41,7 +41,6 @@ public:
 
     //          ACCIONES
     void salto();
-    bool baja_altura();                 // para confirmar la altura apropiada
 
     int getSalud() const;
     int getPerdida() const;

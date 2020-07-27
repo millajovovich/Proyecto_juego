@@ -8,13 +8,16 @@ class jefes: public QGraphicsItem
 {
     double posx;
     double posy;
+
     int ancho;
     int alto;
-    int salud           = 200;
-    bool destruccion    = 0;                   // para confirmar la salud del boss
+    int salud   = 1000;
+    int nivel;
+
+    bool destruccion = 0;                   // para confirmar la salud del boss
 public:
     jefes();
-    jefes (int pos_x , int pos_y );
+    jefes (int pos_x , int pos_y, int lvl_ );
     void movimiento();
 
     bool getDestruccion() const;
