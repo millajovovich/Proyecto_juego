@@ -34,21 +34,25 @@ MainWindow::MainWindow(QWidget *parent)
     connect(tiempo_agujero, SIGNAL(timeout()),  this,SLOT(add_agujero()));
 
     // ocultar los botones para que no aparezcan todos cuando empiece la app
-    ui->gameover->hide();
-    ui->score->  hide();
-    ui->completado->hide();
-    ui->lcdNumber->hide();
-    ui->nombre_1->hide();
-    ui->nombre_2->hide();
-    ui->progressBar_1->hide();
-    ui->progressBar_2->hide();
-    ui->continuar->hide();
-    ui->salir_menu->hide();
-    ui->solo_jugador->hide();
-    ui->multijugador->hide();
-    ui->espacio->hide();
+    ui->gameover->      hide();
+    ui->score->         hide();
+    ui->completado->    hide();
+    ui->lcdNumber->     hide();
+    ui->nombre_1->      hide();
+    ui->nombre_2->      hide();
+    ui->progressBar_1-> hide();
+    ui->progressBar_2-> hide();
+    ui->continuar->     hide();
+    ui->salir_menu->    hide();
+    ui->solo_jugador->  hide();
+    ui->multijugador->  hide();
+    ui->espacio->       hide();
+    ui->cargar->        hide();
+    ui->guardar->       hide();
+    ui->reiniciar->     hide();
 
-    ui->graphicsView->setBackgroundBrush(QBrush(QImage(":/imag/fondo.png")));
+    ui->label_6->       hide();
+    ui->label_7->       hide();
 
 }
 
@@ -93,6 +97,12 @@ void MainWindow::Mover( )
 
             tiempo_enemigos->start(5000 - 1000*nivel);      //  para subir la dificultad tra
 
+            //actualizar valores de check point
+            vida = cuerpo->getSalud();
+            marc = marcador;
+            lvl = nivel;
+
+            //para juego completado
             if ( nivel == 4 ){
                 juego_completado();
             }
@@ -316,6 +326,7 @@ void MainWindow::juego_completado()
 
 }
 
+
 //                                              TECLAS DE MOVIMIENTO Y PAUSE
 void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
@@ -354,7 +365,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
 
     //                                  TECLAS DE EVENTOS
-    if( evento->key()==Qt::Key_P ){
+    if( evento->key()==Qt::Key_P && juego_on == 1){
         timer->          stop();
         tiempo_enemigos->stop();
         tiempo_nubes->   stop();
@@ -364,6 +375,8 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
         ui->salir_menu->show();
         ui->continuar-> show();
+        ui->guardar->   show();
+        ui->reiniciar-> show();
     }
 
     if ( evento->key()==Qt::Key_Space && juego_on == 0 ){           //para evitar errores de tiempo en medio del juego
@@ -406,8 +419,9 @@ void MainWindow::on_solo_jugador_clicked()
 
     Scene->addItem( entorno );
 
-    ui->solo_jugador->       hide();
+    ui->solo_jugador->  hide();
     ui->multijugador->  hide();
+    ui->cargar->        hide();
 
     ui->graphicsView->setBackgroundBrush(QBrush(QImage(":/imag/fondo1.png")));
 }
@@ -450,8 +464,10 @@ void MainWindow::on_continuar_clicked()
     }
 
 
-    ui->continuar->hide();
+    ui->continuar-> hide();
     ui->salir_menu->hide();
+    ui->guardar->   hide();
+    ui->reiniciar-> hide();
 
 }
 
@@ -483,6 +499,7 @@ void MainWindow::on_salir_menu_clicked()
     //              MOSTRAR BOTONES NECESARIOS
     ui->solo_jugador->  show();
     ui->multijugador->  show();
+    ui->cargar->        show();
     ui->completado->    hide();
     ui->score->         hide();
     ui->lcdNumber->     hide();
@@ -493,7 +510,7 @@ void MainWindow::on_salir_menu_clicked()
     ui->continuar->     hide();
     ui->salir_menu->    hide();
     ui->gameover->      hide();
-    ui->seguir->        hide();
+    ui->guardar->       hide();
 
     multijugador     = 0;
     verificador      = 0;
@@ -503,16 +520,97 @@ void MainWindow::on_salir_menu_clicked()
     ui->graphicsView->setBackgroundBrush(QBrush(QImage(":/imag/intro.jpg")));
 }
 
-void MainWindow::on_seguir_clicked()
+void MainWindow::on_registrar_clicked()
 {
-    ui->nombre_1->setText( ui->jugador_1->text() );
-    ui->nombre_2->setText( ui->jugador_2->text() );
+    if ( datos.registro( ui->nombre_reg->text().toStdString(), ui->contra_reg->text().toStdString() ) ){    //verificar ingreso correcto
+        ui->ingreso->hide();
+        ui->registro->hide();
 
-    ui->seguir->hide();
-    ui->jugador_1->hide();
-    ui->jugador_2->hide();
-    ui->p1_nombre->hide();
-    ui->p2_nombre->hide();
-    ui->solo_jugador->show();
-    ui->multijugador->show();
+        ui->solo_jugador->show();
+        ui->multijugador->show();
+        ui->cargar->      show();
+
+        ui->nombre_1->setText( ui->nombre_reg->text() );          //  colocar nombre en juego
+    }
+    else{
+        ui->label_6->show();
+    }
+
+}
+
+void MainWindow::on_ingresar_clicked()
+{
+    if ( datos.ingreso( ui->nombre_ing->text().toStdString(), ui->contra_ing->text().toStdString() ) == true ){
+        ui->ingreso->hide();
+        ui->registro->hide();
+
+        ui->solo_jugador->show();
+        ui->multijugador->show();
+        ui->cargar->      show();
+
+        ui->nombre_1->setText( ui->nombre_reg->text() );          //  colocar nombre en juego
+    }
+    else{
+        ui->label_7->show();
+    }
+}
+
+void MainWindow::on_guardar_clicked()
+{
+    datos.guardado_datos(to_string(vida), to_string(marc), to_string(lvl));
+
+    juego_on = false;
+
+    on_salir_menu_clicked();
+}
+
+void MainWindow::on_cargar_clicked()
+{
+    cuerpo = new personaje();
+    Scene->addItem(cuerpo);
+
+    //      carga de datos de la ultima vez
+    datos.obt_datos( &vida, &marc, &lvl );
+    cuerpo->setSalud(vida);
+    marcador = marc;
+    nivel = lvl;
+
+    ui->lcdNumber->     show();
+    ui->nombre_1->      show();
+    ui->progressBar_1-> show();
+    ui->espacio->       show();
+
+    Scene->addItem( entorno );
+
+    ui->solo_jugador->  hide();
+    ui->multijugador->  hide();
+    ui->cargar->        hide();
+
+    ui->graphicsView->setBackgroundBrush(QBrush(QImage(":/imag/fondo1.png")));
+
+}
+
+void MainWindow::on_reiniciar_clicked()
+{
+    //              PARA LIMPIAR LISTAS
+    balas.clear();
+    balas_ene.clear();
+    enemy.clear();
+    nube.clear();
+    negro.clear();
+    entor.clear();
+    Scene->clear();
+
+    cuerpo = new personaje();
+    Scene->addItem(cuerpo);
+
+    if ( multijugador == 1 ){
+        cuerpo2 = new personaje2();
+        Scene->addItem(cuerpo2);
+    }
+
+    verificador      = 0;
+    verificador_hole = 0;
+    cuenta_enemigos  = 1;
+    nivel            = 1;
 }

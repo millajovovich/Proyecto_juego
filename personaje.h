@@ -48,6 +48,7 @@ public:
 
     void setPuntuacion(int value);
     void setTipo_powerup(int value);            // para darle el power up al personaje
+    void setSalud(int value);                   // para colocarla cuando se cargue una partida
 
     QRectF boundingRect() const ;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR);

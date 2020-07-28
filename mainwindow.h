@@ -19,6 +19,8 @@
 #include "agujero_negro.h"
 #include "ambiente.h"
 
+#include "guardado.h"
+
 #include <QTimer>
 #include <QList>
 
@@ -33,6 +35,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    guardado datos;
+
     bool activacion         = true;         //  para confirmar, por ahora no esta en uso
     bool multijugador       = 0;
     bool ataque_jefe        = 0;
@@ -46,26 +51,10 @@ public:
     int pantalla            = 0;
     int nivel               = 1;            //  representa el nivel actual y para la dificultad
 
-
-private slots:
-    void add_enemigo();                 //      para añadir enemigo
-    void add_boss();                    //      para añadir jefe
-    void add_nube();
-    void add_ambiente();                //  para generar el ambiente de movimiento
-    void add_agujero();
-    void ataque_boss();
-
-    void Mover();                       //      para actualizar las posiciones
-    void juego_terminado();             //      para anunciar game over
-    void juego_completado();
-
-    //       BOTONES
-    void on_solo_jugador_clicked();
-    void on_multijugador_clicked();
-    void on_continuar_clicked();        //  continuar estando en pausa
-    void on_salir_menu_clicked();       //  para salir al menu principal
-
-    void on_seguir_clicked();           //  para pasar del registro a elegir modo de juego
+    //caracteristicas de personaje actual para check points
+    int vida;
+    int marc;
+    int lvl;
 
 private:
     Ui::MainWindow *ui;
@@ -88,6 +77,7 @@ private:
     agujero_negro   *hole;
     ambiente        *entorno;
 
+
     //              LISTAS PARA LOS MOVIMIENTOS Y CONFIMARCIONES DE COLISION
     QList <ataques*>             balas;
     QList <ataques_enemigos*>    balas_ene;
@@ -98,5 +88,29 @@ private:
 
 
     void keyPressEvent(QKeyEvent *evento);
+
+private slots:
+    void add_enemigo();                 //      para añadir enemigo
+    void add_boss();                    //      para añadir jefe
+    void add_nube();
+    void add_ambiente();                //  para generar el ambiente de movimiento
+    void add_agujero();
+    void ataque_boss();
+
+    void Mover();                       //      para actualizar las posiciones
+    void juego_terminado();             //      para anunciar game over
+    void juego_completado();
+
+    //       BOTONES
+    void on_solo_jugador_clicked();
+    void on_multijugador_clicked();
+    void on_continuar_clicked();        //  continuar estando en pausa
+    void on_salir_menu_clicked();       //  para salir al menu principal
+
+    void on_registrar_clicked();
+    void on_ingresar_clicked();
+    void on_guardar_clicked();
+    void on_cargar_clicked();
+    void on_reiniciar_clicked();
 };
 #endif // MAINWINDOW_H

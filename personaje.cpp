@@ -2,6 +2,11 @@
 #include "enemigo.h"
 #include "mainwindow.h"
 
+void personaje::setSalud(int value)
+{
+    salud = value;
+}
+
 personaje::personaje()
 {
     posx=400;
