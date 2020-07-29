@@ -36,7 +36,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    guardado datos;
+    guardado *datos = new guardado();
 
     bool activacion         = true;         //  para confirmar, por ahora no esta en uso
     bool multijugador       = 0;
@@ -52,9 +52,9 @@ public:
     int nivel               = 1;            //  representa el nivel actual y para la dificultad
 
     //caracteristicas de personaje actual para check points
-    int vida;
-    int marc;
-    int lvl;
+    int vida = 100;
+    int marc = 0;
+    int lvl = 1;
 
 private:
     Ui::MainWindow *ui;

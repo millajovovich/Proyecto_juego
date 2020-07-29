@@ -2,9 +2,10 @@
 #define GUARDADO_H
 
 #include <iostream>
-#include <fstream>
-#include <map>
+#include <QFile>
+#include <QTextStream>
 #include <vector>
+#include <map>
 
 using namespace std;
 

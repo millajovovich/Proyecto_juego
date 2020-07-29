@@ -10,7 +10,7 @@ agujero_negro::~agujero_negro()
 
 agujero_negro::agujero_negro(): escala(0.04)
 {
-    posx = 830;
+    posx = 850;
     posy = rand()%440+60;
     vx = -8;
     vy = 0;

@@ -2,35 +2,54 @@
 
 guardado::guardado()
 {
-    ifstream entrada;
-    entrada.open("datos.txt");
 
-    string nombre = "", linea;
+    QFile file("datos.txt");
 
-    //          while para obtener datos de cada usuario
-    while ( !entrada.eof() ){
-        getline(entrada, linea);
-        nombre = linea;
+    if ( file.open( QFile::ReadOnly | QFile::Text ) ){
+        string  line;
+        string nombre = "";
 
-        getline(entrada, linea);
-        usuarios[nombre].push_back(linea);
+        while (!file.atEnd() ) {
+            line = file.readLine().toStdString();
+            line.resize(line.length()-1);               //  para quitarle el salto de linea que queda en el string
+            nombre = line;
 
-        getline(entrada, linea);
-        usuarios[nombre].push_back(linea);
+            line = file.readLine().toStdString();
+            line.resize(line.length()-1);
+            usuarios[nombre].push_back(line);
 
-        getline(entrada, linea);
-        usuarios[nombre].push_back(linea);
+            line = file.readLine().toStdString();
+            line.resize(line.length()-1);
+            usuarios[nombre].push_back(line);
 
-        getline(entrada, linea);
-        usuarios[nombre].push_back(linea);
-        getline(entrada, linea);
+            line = file.readLine().toStdString();
+            line.resize(line.length()-1);
+            usuarios[nombre].push_back(line);
+
+            line = file.readLine().toStdString();
+            line.resize(line.length()-1);
+            usuarios[nombre].push_back(line);
+            line = file.readLine().toStdString();
+        }
+        file.flush();
+        file.close();
     }
 }
 
-bool guardado::registro(string nombre, string contra){
+bool guardado::registro(string nombre, string contra)
+{
+    //          for para evitar espacios vacios
+    if ( nombre == "" && contra == "" ){
+        return false;
+    }
+    //          for para evitar nombres repetidos
+    for (auto &ite : usuarios){
+        if ( ite.first == nombre)
+            return false;
+    }
 
     // fors para confirmar que se ingrese con letras permitidas para el nombre y contraseña
-    for (unsigned int i = 0; i< nombre.length(); i++ ){
+    for ( unsigned int i = 0; i< nombre.length(); i++ ){
         if ( ( 64<nombre[i] && nombre[i]<91 ) || ( 96<nombre[i] && nombre[i]<123 ) || ( 48<nombre[i] && nombre[i]<58 ) ){
             NULL;
         }
@@ -40,7 +59,7 @@ bool guardado::registro(string nombre, string contra){
         }
     }
 
-    for (unsigned int i = 0; i< contra.length(); i++ ){
+    for ( unsigned int i = 0; i< contra.length(); i++ ){
         if ( ( 64<contra[i] && contra[i]<91 ) || ( 96<contra[i] && contra[i]<123 ) || ( 48<contra[i] && contra[i]<58 ) ){
             NULL;
         }
@@ -49,16 +68,35 @@ bool guardado::registro(string nombre, string contra){
             return  false;
         }
     }
+
     usuarios[nombre].push_back(contra);                 // agrego contraseña al mapa
     usuarios[nombre].push_back("100");                  // agrego salud al mapa
     usuarios[nombre].push_back("0");                    // agrego marcador al mapa
     usuarios[nombre].push_back("1");                    // agrego nivel al mapa
     usuario_actual = nombre;
+
+
+    QFile file("datos.txt");
+
+    if ( file.open( QFile::WriteOnly | QFile::Append) ){
+        QTextStream out (&file);
+        out << QString::fromStdString(nombre)<< '\n';
+        out << QString::fromStdString(contra)<< '\n';
+        out << 100 << '\n';
+        out << 0 << '\n';
+        out << 1 << '\n';
+    }
+    file.close();
     return true;
+
+
 }
 
 bool guardado::ingreso(string nombre, string contra)
 {
+    if ( nombre == "" && contra == "" ){
+        return false;
+    }
     for ( auto &ite : usuarios ){        // for para recorrer la lista de ususarios
         if ( ite.first == nombre && ite.second.at(0) == contra ){
             usuario_actual = nombre;
@@ -68,12 +106,9 @@ bool guardado::ingreso(string nombre, string contra)
     return false;
 }
 
-void guardado::guardado_datos(  string marc, string salud, string nivel )
+void guardado::guardado_datos( string salud, string marc, string nivel )
 {
-    ofstream salida;
-    salida.open("datos.txt");
-
-    // guardado de datos de jugador actual
+    //      for para actualizar datos del usuario que guarda
     for ( auto &ite : usuarios ){        // for para recorrer la lista de ususarios
         if ( ite.first == usuario_actual ){
             ite.second.at(1) = salud;
@@ -82,14 +117,18 @@ void guardado::guardado_datos(  string marc, string salud, string nivel )
         }
     }
 
+    QFile file("datos.txt");
 
-    // for para colocar toda la info de los usuarios en archivo
-    for ( auto ite : usuarios ){        // for para recorrer la lista de ususarios
-        salida<< ite.first << '\n' << ite.second.at(0) << '\n' << ite.second.at(1) << '\n' << ite.second.at(2) << '\n'
-              << ite.second.at(3) << "\n;\n";
+    if ( file.open( QFile::WriteOnly | QFile::Text ) ){
+        QTextStream out (&file);
+        for ( auto ite : usuarios ){        // for para recorrer la lista de ususarios
+            out << QString::fromStdString(ite.first)  << '\n'
+                << QString::fromStdString(ite.second.at(0)) << '\n'
+                << QString::fromStdString(ite.second.at(1)) << '\n'
+                << QString::fromStdString(ite.second.at(2)) << '\n'
+                << QString::fromStdString(ite.second.at(3)) << "\n;\n";
+        }
     }
-
-    salida.close();
 }
 
 void guardado::obt_datos(int *salud, int *marc, int *nivel)

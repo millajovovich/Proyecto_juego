@@ -61,7 +61,7 @@ QRectF jefes::boundingRect() const
     if ( nivel == 1 ){
         return QRectF(0,0,140,420);
     }
-    else if ( nivel == 2 )
+    else if ( nivel == 2  || nivel == 3)
         return QRectF(0,0,150,420);
 }
 

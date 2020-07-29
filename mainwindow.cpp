@@ -152,10 +152,11 @@ void MainWindow::Mover( )
             delete enemy.at(i);
             enemy.removeOne(enemy.at(i));                   //para eliminar de la lista
 
+            // para llevar la cuenta de en cuanto aparece el boss o aumenta dificultad.
+            cuenta_enemigos += 1;
 
-            cuenta_enemigos += 1;               // para llevar la cuenta de en cuanto aparece el boss o aunmenta dif.
             //      CUENTA PARA APARICION DE LOS JEFES SOLO EN JUGADOR SOLO
-            if ( multijugador == 0 && cuenta_enemigos%5*nivel == 0 && verificador == 0){
+            if ( multijugador == 0 && cuenta_enemigos%15*nivel == 0 && verificador == 0){
                 add_boss();
                 nivel += 1;
             }
@@ -298,6 +299,7 @@ void MainWindow::juego_terminado()
     ui->gameover->  show();
     ui->score->     show();
     ui->salir_menu->show();
+    ui->reiniciar-> show();
 
     juego_on = false;
 
@@ -375,28 +377,20 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
         ui->salir_menu->show();
         ui->continuar-> show();
-        ui->guardar->   show();
         ui->reiniciar-> show();
+        if ( multijugador == false )            // multijugador no contiene guardado
+            ui->guardar->   show();
     }
 
     if ( evento->key()==Qt::Key_Space && juego_on == 0 ){           //para evitar errores de tiempo en medio del juego
 
         juego_on = true;
 
-        if ( multijugador == 0 ){
-            timer->start(15);
-            tiempo_enemigos->start(4000);
-            tiempo_nubes->start(45000);
-            tiempo_agujero->start(40000);
-            tiempo_amb->start(20000);
-        }
-        else if ( multijugador == 1 ){
-            timer->start(15);
-            tiempo_enemigos->start(4000);
-            tiempo_nubes->start(45000);
-            tiempo_agujero->start(40000);
-            tiempo_amb->start(20000);
-        }
+        timer->start(15);
+        tiempo_enemigos->start(4000);
+        tiempo_nubes->start(45000);
+        tiempo_agujero->start(40000);
+        tiempo_amb->start(20000);
 
         ui->espacio->hide();
     }
@@ -411,6 +405,8 @@ void MainWindow::on_solo_jugador_clicked()
 
     marcador = 0;
     verificador = 0;
+
+    ui->lcdNumber->display(marcador);
 
     ui->lcdNumber->     show();
     ui->nombre_1->      show();
@@ -511,6 +507,9 @@ void MainWindow::on_salir_menu_clicked()
     ui->salir_menu->    hide();
     ui->gameover->      hide();
     ui->guardar->       hide();
+    ui->reiniciar->     hide();
+
+    juego_on = false;
 
     multijugador     = 0;
     verificador      = 0;
@@ -522,7 +521,7 @@ void MainWindow::on_salir_menu_clicked()
 
 void MainWindow::on_registrar_clicked()
 {
-    if ( datos.registro( ui->nombre_reg->text().toStdString(), ui->contra_reg->text().toStdString() ) ){    //verificar ingreso correcto
+    if ( datos->registro( ui->nombre_reg->text().toStdString(), ui->contra_reg->text().toStdString() ) ){  //verificar ingreso correcto
         ui->ingreso->hide();
         ui->registro->hide();
 
@@ -540,7 +539,7 @@ void MainWindow::on_registrar_clicked()
 
 void MainWindow::on_ingresar_clicked()
 {
-    if ( datos.ingreso( ui->nombre_ing->text().toStdString(), ui->contra_ing->text().toStdString() ) == true ){
+    if ( datos->ingreso( ui->nombre_ing->text().toStdString(), ui->contra_ing->text().toStdString() ) == true ){
         ui->ingreso->hide();
         ui->registro->hide();
 
@@ -557,7 +556,7 @@ void MainWindow::on_ingresar_clicked()
 
 void MainWindow::on_guardar_clicked()
 {
-    datos.guardado_datos(to_string(vida), to_string(marc), to_string(lvl));
+    datos->guardado_datos(to_string(vida), to_string(marc), to_string(lvl));
 
     juego_on = false;
 
@@ -570,7 +569,7 @@ void MainWindow::on_cargar_clicked()
     Scene->addItem(cuerpo);
 
     //      carga de datos de la ultima vez
-    datos.obt_datos( &vida, &marc, &lvl );
+    datos->obt_datos( &vida, &marc, &lvl );
     cuerpo->setSalud(vida);
     marcador = marc;
     nivel = lvl;
@@ -580,6 +579,7 @@ void MainWindow::on_cargar_clicked()
     ui->progressBar_1-> show();
     ui->espacio->       show();
 
+    ui->lcdNumber->display(marcador);
     Scene->addItem( entorno );
 
     ui->solo_jugador->  hide();
@@ -592,25 +592,9 @@ void MainWindow::on_cargar_clicked()
 
 void MainWindow::on_reiniciar_clicked()
 {
-    //              PARA LIMPIAR LISTAS
-    balas.clear();
-    balas_ene.clear();
-    enemy.clear();
-    nube.clear();
-    negro.clear();
-    entor.clear();
-    Scene->clear();
+    on_salir_menu_clicked();
+    on_solo_jugador_clicked();
 
-    cuerpo = new personaje();
-    Scene->addItem(cuerpo);
-
-    if ( multijugador == 1 ){
-        cuerpo2 = new personaje2();
-        Scene->addItem(cuerpo2);
-    }
-
-    verificador      = 0;
-    verificador_hole = 0;
-    cuenta_enemigos  = 1;
-    nivel            = 1;
+    marcador = 0;
+    ui->lcdNumber->display(marcador);
 }

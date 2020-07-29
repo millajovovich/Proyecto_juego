@@ -18,4 +18,5 @@
         <file>fondo1.png</file>
         <file>boton.png</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>
